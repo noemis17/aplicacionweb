@@ -4,6 +4,7 @@
  */
 /* FONT PATH
  * -------------------------- */
+ 
 @font-face {
   font-family: 'FontAwesome';
   src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
@@ -19,6 +20,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.forma {
+  width: 345px ;
+  height: 35px;
+}
+.bigicon {
+  font-size: 20px;
+  color: rgb(131, 4, 4);
+}
+
 /* makes the font 33% larger relative to the icon container */
 .fa-lg {
   font-size: 1.33333333em;

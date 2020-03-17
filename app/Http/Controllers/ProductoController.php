@@ -37,7 +37,7 @@ class ProductoController extends Controller
             $producto->IDBRAND=$value[3];    //idmarca
             $producto->MARCA=$value[4];    //marca
             $producto->PESOITEM=$value[5];    //peso
-            $producto->stock=$value[6];    //stock
+            $producto->stock="2";    //stock
             $producto->estado_del="1";
            
             $producto->save();

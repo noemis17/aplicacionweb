@@ -80,7 +80,9 @@
                           <li ><a href="{{ route('home') }}">Supercito</a></li>
                           {{-- <li><a href="entradas.html">Roles</a></li>
                           <li><a href="entradas.html">Usuarios</a></li>
-                          <li><a href="usuarios.html">Productos</a></li> --}}
+                          <li><a href="usuarios.html">Productos</a></li> 
+                          <li><a href="usuarios.html">Productos</a></li> 
+                          --}}
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="nav-item nav navbar-nav navbar-right">

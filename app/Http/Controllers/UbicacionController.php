@@ -44,6 +44,7 @@ class UbicacionController extends Controller
         $message ='';
         $items ='';
 
+        
         if (empty($nome_token_user)) {
 
             $code='403';

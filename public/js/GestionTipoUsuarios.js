@@ -1,5 +1,5 @@
 //var nome_token_user;
-
+var urlServidor="http://127.0.0.1:8000";
 $( document ).ready(function() {
 	//nome_token_user = $('#nome_token_user').val();
 	//cargar_tablaTipoUsuarios('');
@@ -18,7 +18,7 @@ function cargar_tablaTipoUsuarios(value='') {
     });
 
     $.ajax({
-        url: '/api/v0/tipo_usuarios_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url: urlServidor+'/api/v0/tipo_usuarios_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
         method: "GET",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
@@ -149,7 +149,7 @@ function tipo_usuarios_eliminar(nome_token) {
     if (willDelete) {
 
       $.ajax({
-        url: '/api/v0/tipo_usuarios_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url: urlServidor+'/api/v0/tipo_usuarios_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
         method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
@@ -197,7 +197,7 @@ $('#frmTipoUsuarios_modificar').on('submit',function (e) {
     if (willDelete) {
 
       $.ajax({
-        url: '/api/v0/tipo_usuarios_update/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url: urlServidor+'/api/v0/tipo_usuarios_update/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
         method: "PUT",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
@@ -246,7 +246,7 @@ $('#frmTipoUsuarios').on('submit',function (e) {
     if (willDelete) {
 
       $.ajax({
-        url: '/api/v0/tipo_usuarios_store/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url: urlServidor+'/api/v0/tipo_usuarios_store/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
         method: "POST",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito

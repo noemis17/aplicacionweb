@@ -28,6 +28,7 @@ class TipoUsuarioController extends Controller
     {
         //
     }
+    
 
     /**
      * Store a newly created resource in storage.

@@ -12,6 +12,7 @@
                 @include('z_admin.TipoUsuarios.frm')
                 @include('z_admin.Usuarios.frm')
                 @include('z_admin.Productos.frm')
+                @include('z_admin.Promociones.modal')
                 @include('z_admin.Pedidos.frm')
                 @include('z_admin.Ventas.frm')
                 @include('z_admin.Reportes.frm')
@@ -41,6 +42,7 @@
     <script src="{{ asset('js/GestionProductosJSON.js') }}" defer></script>
     <script src="{{ asset('js/GestionProductos.js') }}" defer></script>
     <script src="{{ asset('js/GestionReportes.js') }}" defer></script>
+    <script src="{{ asset('js/GestionPromocion.js') }}" defer></script>
     <script>
         function printDiv(nombreDiv) {
             var contenido= document.getElementById(nombreDiv).innerHTML;
