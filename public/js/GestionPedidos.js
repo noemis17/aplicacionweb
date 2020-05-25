@@ -1,3 +1,4 @@
+var servidor="http://127.0.0.1:8000";
 //GestionPedidos.js
 $( document ).ready(function() {
 	//swal('GestionPedidos.js');
@@ -20,7 +21,7 @@ function cargar_tablaPedidos(value='') {
   });
 
   $.ajax({
-    url: '/api/v0/ventas_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+    url: servidor+'/api/v0/ventas_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
     method: "GET",             // Tipo de solicitud que se enviará, llamado como método
     data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
@@ -35,32 +36,32 @@ function cargar_tablaPedidos(value='') {
   });
 }
 
-function crear_tablaPedidos(data) {
-	//swal('hola');
-  	$('#tablaPedidos').html('');
+// function crear_tablaPedidos(data) {
+// 	//swal('hola');
+//   	$('#tablaPedidos').html('');
 
-    //console.log(data);
-	$.each(data.items, function(a, item) { // recorremos cada uno de los datos que retorna el objero json n valores
+//     //console.log(data);
+// 	$.each(data.items, function(a, item) { // recorremos cada uno de los datos que retorna el objero json n valores
 
-	  var fila="";
-	  fila=`
-	    <tr class="fila_${item.nome_token}">
-	        <th scope="row">${a+1}</th>
-          <td><input type="hidden" value="${item.fecha}">${item.fecha}</td>
-	        <td><input type="hidden" value="${item.cliente.name}">${item.cliente.name}</td>
-	        <td><button type="button" class="btn btn-sm btn-outline-success" onclick="pedidos_verCouriers('${item.nome_token}')">Asignar </button></td>
-	        <td>
-	          <button type="button" class="btn btn-sm btn-outline-info" onclick="pedidos_ver('${item.nome_token}')" data-toggle="modal" >Ver</button>
-	          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="pedidos_eliminar('${item.nome_token}')">Eliminar</button>
-	        </td>
-	    </tr>
-	  `;
-	    //console.log(item);
-	    $('#tablaPedidos').append(fila);
+// 	  var fila="";
+// 	  fila=`
+// 	    <tr class="fila_${item.nome_token}">
+// 	        <th scope="row">${a+1}</th>
+//           <td><input type="hidden" value="${item.fecha}">${item.fecha}</td>
+// 	        <td><input type="hidden" value="${item.cliente.name}">${item.cliente.name}</td>
+// 	        <td><button type="button" class="btn btn-sm btn-outline-success" onclick="pedidos_verCouriers('${item.nome_token}')">Asignar </button></td>
+// 	        <td>
+// 	          <button type="button" class="btn btn-sm btn-outline-info" onclick="pedidos_ver('${item.nome_token}')" data-toggle="modal" >Ver</button>
+// 	          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="pedidos_eliminar('${item.nome_token}')">Eliminar</button>
+// 	        </td>
+// 	    </tr>
+// 	  `;
+// 	    //console.log(item);
+// 	    $('#tablaPedidos').append(fila);
 
-	});
+// 	});
 
-}
+// }
 
 function pedidos_eliminar(nome_token) {
   var FrmData=
@@ -85,7 +86,7 @@ function pedidos_eliminar(nome_token) {
     if (willDelete) {
 
       $.ajax({
-        url: '/api/v0/ventas_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url: servidor+'/api/v0/ventas_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
         method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
@@ -195,7 +196,7 @@ function pedidos_ver(nome_token) {
   });
 
   $.ajax({
-    url: '/api/v0/ventas_show/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+    url: servidor+'/api/v0/ventas_show/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
     method: "GET",             // Tipo de solicitud que se enviará, llamado como método
     data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
@@ -317,7 +318,7 @@ function cargar_tablaCouriers(value='') {
   });
 
   $.ajax({
-    url: '/api/v0/usuarios_couriers_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+    url: servidor+'/api/v0/usuarios_couriers_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
     method: "GET",             // Tipo de solicitud que se enviará, llamado como método
     data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
@@ -455,7 +456,7 @@ function pedidos_asignarCourier(nome_token) {
 		if (willDelete) {
 
 			$.ajax({
-		    url: '/api/v0/ventas_asignar_courier/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+		    url: servidor+'/api/v0/ventas_asignar_courier/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
 		    method: "PUT",             // Tipo de solicitud que se enviará, llamado como método
 		    data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
 		    success: function (data)   // Una función a ser llamada si la solicitud tiene éxito

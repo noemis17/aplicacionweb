@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\ProductoPromociones;
 use App\Producto;
 use Illuminate\Http\Request;
 use App\User;
@@ -154,7 +154,8 @@ class ProductoController extends Controller
      */
     public function show($nome_token_user,Request $request)
     {
-        //return response()->json($request);
+
+        return response()->json($request);
         $code='';
         $message ='';
         $items ='';
@@ -308,11 +309,14 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
+
+     
     public function Filtro($nome_token_user='',Request $request)
     {
         $code='';
         $message ='';
         $items ='';
+        //return response()->json($nome_token_user);
 
         // $items = Producto::where([["estado_del","1"],["descripcion","like","%$request->nome_token%"]])->get();
         // return response()->json($items);
@@ -332,14 +336,14 @@ class ProductoController extends Controller
             } else {
 
                 $code = '200';
-                $items = Producto::where([["estado_del","1"],["NAME","like","%$request->value%"]])->orderBy('NAME', 'desc')->get();
+                $items = Producto::where([["estado_del","1"],["NAME","like","%$request->value%"]])->orderBy('NAME', 'asc')->get();
                 $message = 'OK';
 
             }
 
         }
 
-        //$items = Producto::where([['estado_del','1'],['cantidad','>','0']])->get();
+        
 
         $result =   array(
                         'items'     => $items,
@@ -419,7 +423,51 @@ class ProductoController extends Controller
         //
         return response()->json($result);        
 
-
     }
+    public function Buscar($nome_token_user='',Request $request)
+    {
+      
+        $code='';
+        $message ='';
+        $items ='';
+        if (empty($nome_token_user)) {
+
+            $code='403';
+            $items = 'null';
+            $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
+
+        }else{
+
+            $validad = User::where('nome_token',$nome_token_user)->first();
+
+            if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
+                //no existe ese usuarios o fue dado de baja.
+            } else {
+
+
+                $code = '200';
+                
+                if(trim($request->term) == ''){
+                    $items =Producto::where([["estado_del","1"]])->limit(20)->get(['id','NAME as text']);
+                }else{
+                    $items =Producto::where([["estado_del","1"],["NAME","like",'%'.$request->term.'%']])->limit(20)->get(['id', 'NAME as text']);
+                }
+
+                $message = 'OK';
+            }
+
+        }
+
+        $result =   array(
+                        'items'     => $items,
+                        'code'      => $code,
+                        'message'   => $message
+                    );
+            
+        return response()->json($result);
+    }
+
+
+
 
 }

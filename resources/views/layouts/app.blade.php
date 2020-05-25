@@ -16,18 +16,23 @@
     <script src="{{ asset('js/jQuery.print/jQuery.print.js') }}" defer></script> 
     <script src="{{ asset('plantilla/js/bootstrap.min.js') }}" defer></script>
     <script src="{{ asset('js/adminSistema.js') }}" defer></script>
+    <script src="{{ asset('js/select2.min.js') }}" defer></script>
     {{-- <script src="{{ asset('js/bootstrap-toggle.js') }}" defer></script> --}} 
     {{-- <!-- Fonts -->
     {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com"> --}}
     {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
-
+  
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/jquery.dataTables.css') }}" rel="stylesheet"> 
     <link href="{{ asset('plantilla/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('plantilla/css/estilos.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-toggle.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2-bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('css/w3school-toggle.css') }}" rel="stylesheet">
+   
+    <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
     {{-- <style media="screen">

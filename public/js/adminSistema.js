@@ -31,9 +31,12 @@ function ocultar(argument) {
   $('#cardTipoUsuarios').hide();
   $('#cardUsuarios').hide();
   $('#cardProductos').hide();
+  $('#cardIngreso').hide();
+  $('#cardregistrokit').hide();
   $('#cardPedidos').hide();
   $('#cardVentas').hide();
   $('#cardReportes').hide();
+
   
 }
 function contar(){
@@ -76,6 +79,10 @@ function mostrar(argument) {
   $('#cardPedidos').show();
   $('#cardVentas').show();
   $('#cardReportes').show();
+  $('#cardIngreso').show();
+  $('#cardregistrokit').show();
+  
+ 
 }
 
 function limpiar() {
@@ -145,21 +152,28 @@ $('#btnVerFrmProductos').click(function (e) {
 	ocultar();
 	limpiar();
 	cargar_tablaProductos('');
-	//alert('hola');
-  // puto();
-  // GP_cargarTablaProductosApp();
-
-///estooooooooooooo comenteeeeee las 2
-//   GP_cargar_lista_productos('');
-//   GP_cargarTablaProductosBodega_2(0,'');
-
 	$('#cardProductos').show();
-	// GP_recorrer_tabla();
-	//cargar_frm_ventas();
+	
 });
+//boton Promocion
+$('#btnVerFrmPromocion').click(function (e) {
+	ocultar();
+	limpiar(); 
+	cargar_tablaRegistro();
+	$('#cardIngreso').show();
+	
+});
+$('#btnVerFrmkits').click(function (e) {
+	ocultar();
+	limpiar();
+	$('#cardregistrokit').show();
+	
+});
+
 
 $('#btnVerFrmReportes').click(function (e) {
   ocultar();
+  
   $('#cardReportes').show();
 });
 

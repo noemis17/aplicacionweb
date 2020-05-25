@@ -96,7 +96,9 @@ function crear_tablaUsuarios(data) {
      });
 
  }
-
+ $(document).ready( function () {
+  $('#myTable').DataTable();
+} );
 function crear_tablaUsuarios_2(data) {
   var ancho = '16%';
   $('#tablaUsuarios_padre').html('');

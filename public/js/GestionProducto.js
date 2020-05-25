@@ -1,5 +1,7 @@
 
 var servidor="http://127.0.0.1:8000";
+
+
 function cargar_tablaProductos(value='') {
 	var FrmData=
 	{
@@ -104,8 +106,8 @@ function crear_tablaProductos_v2(data) {
               width:ancho,
               data: null,
               render: function (data, type, row) {
-                var html = "<button type='button' value="+data.id+" style='color: black;' class='btn btn-info abrirmodal'><i class='fa fa-tags' aria-hidden='true'></i>  Promociones</button>";
-              
+                var html = "<button type='button' value="+data.id+" style='color: black;' class='btn btn-info abrirmodal'><i class='fa fa-tags' aria-hidden='true'></i> Promociones</button>";
+                          
                 return `${html}`;
                 // return `<button>hola</button>`;
 
@@ -119,93 +121,400 @@ function crear_tablaProductos_v2(data) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////DATOS DE PROMOCIONES Y PRODUCTO////////////////////////////////////////////////////////////////////////////////////////
- 
+
  //ingreso de producto y promocion
- function ingresarPromocionProducto(){ 
-  swal({
-    title: 'Estas seguro de esto?',
-    text: "Si aceptas, se creará una nueva promocion al producto!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-}).then((willDelete) =>{
-  if (willDelete) {
-    var FrmData = {
-      idPromociones: $('#cmbPromocion').val(),
-      idProducto: id,
-      fecha_inicio:$('#idfechainicio').val(),
-      fecha_fin: $('#idfechafinal').val(),
-      precio: $('#idPrecio').val(),
-    
-    }
-    $.ajaxSetup({
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-     });
-    
-    $.ajax({
-        url: servidor+'/api/v0/ProductoPromociones_store/'+$('#nome_token_user').val()+'/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
-        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
-        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
-        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
-        {
-          cargar_tablaProductosPromocion();
-          swal("ACCION EXITOSA!", "Datos Guardados", "success");   
-        },
-        error: function () {
-          mensaje = "OCURRIO UN ERROR: Archivo->GestionProducto.js";
-          swal(mensaje);
+//  function ingresarPromocionProducto(){ 
   
-      }
-    });  
-  } else {
-    swal("Cancelado!");
-  }
-});
-}
-
-
-var id = '';
-//modal de producto promocion
- $('body').on('click','.abrirmodal',function(){
-  $('#id_Procu').val('');
-  id='';
-  id=$(this).val();// este es el id del prodcuto que le va a servir al ingresar la pomocion del producto
-  var informacion = new Array();
-  i=0;
-  $(this).parents("tr").find("td").each(function()
-  {
-    informacion[i]=$(this).html();
-    i++;    
-  })
-  Promocones_Producto();
-  cargar_tablaProductosPromocion() ;
-   $('#modalPromocion').modal('show');
-   $('#id_Procu').val(informacion[0]);
- });
-// cargar select todas las promociones
- function Promocones_Producto() {
-  $("#cmbPromocion").empty();
-
-  $.ajax({
-    type: "GET",
+//   if ($('#idfechainicio').val() != "" && $('#idfechafinal').val() != "" && $('#idPrecio').val() != "") {
+//   swal({
+//     title: 'Estas seguro de esto?',
+//     text: "Si aceptas, se creará una nueva promocion al producto!",
+//     icon: "warning",
+//     buttons: true,
+//     dangerMode: true,
+// }).then((willDelete) =>{
+//   if (willDelete) {
+//     var FrmData = {
+//       idPromociones: $('#cmbPromocion').val(),
+//       idProducto: id,
+//       fecha_inicio:$('#idfechainicio').val(),
+//       fecha_fin: $('#idfechafinal').val(),
     
-    url: servidor +'/api/v0/promociones_filtro/' + $('#nome_token_user').val(),
-    async: false,
-    dataType: "json",
-    success: function (data) {
-      $.each(data.items, function (key, registro){
-        $("#cmbPromocion").append('<option value=' + registro.id + '>' + registro.descripcion + '</option>'); 
-      });
-    },
-    error: function (data) {
-      alert('error');
-    }
-  });
+//     }
+//     $.ajaxSetup({
+//       headers: {
+//           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//       }
+//      });
+    
+//     $.ajax({
+//         url: servidor+'/api/v0/ProductoPromociones_store/'+$('#nome_token_user').val()+'/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
+//         method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+//         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+//         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+//         {
+//           cargar_tablaProductosPromocion();
+//           limpiarPromocionProducto();
+//           swal("ACCION EXITOSA!", "Datos Guardados", "success");   
+//         },
+//         error: function () {
+//           mensaje = "OCURRIO UN ERROR: Archivo->GestionProducto.js";
+//           swal(mensaje);
+  
+//       }
+//     });  
+//   } else {
+//     swal("Cancelado!");
+//   }
+// });
+// }else{
+//   mensaje = "FALTAN CAMPOS QUE LLENAR";
+//           swal(mensaje);
+// } 
+// }
+
+// function limpiarPromocionProducto() {
+// 	$('input[type="text"]').val(null);
+// 	$('input[type="date"]').val(null);
+
+// }
+
+// // var id = '';
+// //modal de producto promocion
+// //  $('body').on('click','.abrirmodal',function(){
+// //   $('#id_Procu').val('');
+// //   id='';
+// //   id=$(this).val();// este es el id del prodcuto que le va a servir al ingresar la pomocion del producto
+// //   var informacion = new Array();
+// //   i=0;
+// //   $(this).parents("tr").find("td").each(function()
+// //   {
+// //     informacion[i]=$(this).html();
+// //     i++;    
+// //   })
+// //   Promocones_Producto();
+// //   cargar_tablaProductosPromocion() ;
+// //    $('#modalPromocion').modal('show');
+// //    $('#id_Procu').val(informacion[0]);
+// //  });
+// // cargar select todas las promociones
+//  function Promocones_Producto() {
+//   $("#cmbPromocion").empty();
+  
+//   $.ajax({
+//     type: "GET",
+//     url: servidor +'/api/v0/promociones_filtro/' + $('#nome_token_user').val(),
+//     async: false, 
+//     dataType: "json",
+//     success: function (data) {
+//       $.each(data.items, function (key, registro){
+//         $("#cmbPromocion").append('<option value=' + registro.id + '>' + registro.descripcion + '</option>'); 
+//       });
+//     },
+//     error: function (data) {
+//       alert('error');
+//     }
+//   });
+// }
+//  //mostrar de producto y promocion
+//  function cargar_tablaProductosPromocion() {
+
+// 	var FrmData=
+// 	{
+// 		idProducto: id,
+// 	}
+// 	$.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+
+//     $.ajax({
+//         url: servidor+'/api/v0/ProductoPromociones_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+//         method: "GET",             // Tipo de solicitud que se enviará, llamado como método
+//         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+//         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+//         {
+//           //console.log(data);
+         
+//           crear_tablaProductos_Promocion(data.items);
+//         	//console.log(data);
+//         },
+//         error: function () {
+//             mensaje = "OCURRIO UN ERROR : Archivo->GestionProducto.js , funcion->cargar_tablaProducto()";
+//            	swal(mensaje);
+//         }
+// 	});
+// }
+// function crear_tablaProductos_Promocion(data) {
+
+//   var ancho = '16%';
+//   $('#tablaProductoPromocion').html('');
+//   $('#tablaProductoPromo').html('');
+
+//   $('#tablaProductoPromocion').DataTable({
+//       destroy: true,
+//       order: [],
+//       data: data[0].promociones_producto,
+//       'createdRow': function (row, data, dataIndex) {
+//         //console.log(data);
+//       },
+//       'columnDefs': [
+//           {
+//              'targets':2,
+//              'data':'data',
+//              'createdCell':  function (td, cellData, rowData, row, col) {
+
+//              },
+//           }
+//        ],
+//       columns: [
+//           {
+//               title: 'Promocion',
+//               width:ancho,
+//               data: 'promociones.descripcion'
+//           },
+//           {
+//               title: 'Fecha Inicio',
+//               width:ancho,
+//               data: 'fecha_inicio'
+//           },
+//           {
+//             title: 'Fecha fin',
+//             width:ancho,
+//             data: 'fecha_fin'
+//           },
+//           {
+//             title: 'ACCIONES',
+//             width:ancho,
+//             data: null,
+//             render: function (data, type, row) {
+//               var html = "<button type='button'  class='btn btn-sm btn-danger eliminarProductoPromocion' value="+data.nome_token+" '><i class='fa fa-trash' aria-hidden='true'></i></button>";
+            
+//               return `${html}`;
+             
+
+//             }
+//          }
+//       ],
+
+//   });
+// }
+// $('body').on('click','.eliminarProductoPromocion',function(){
+//   PromocionProducto_eliminar($(this).val());
+//  });
+//  ///FUNCION DE ELIMINAR UNA PROMOCION A UN PRODUCTO SI FUE MAL ENVIADA
+//  function PromocionProducto_eliminar(nome_token) {
+
+//   var FrmData=
+//   {
+//     nome_token:  nome_token,
+//   }
+
+//   $.ajaxSetup({
+//     headers: {
+//       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+//   });
+//   swal({
+//     title: "Estas seguro de esto?",
+//     text: "Si aceptas, los datos seran eliminados!",
+//     icon: "warning",
+//     buttons: true,
+//     dangerMode: true,
+//   })
+//   .then((willDelete) =>
+//    {
+//     if (willDelete) 
+//     {
+
+//       $.ajax({
+//         url: servidor+'/api/v0/ProductoPromociones_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+//         method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
+//         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+//         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+//         {
+//           swal("ACCION EXITOSA!", "Datos Eliminados", "success");
+//           console.log(data);
+//           cargar_tablaProductosPromocion();
+        
+//         },
+//         error: function (data) {
+//             mensaje = "OCURRIO UN ERROR: Archivo->GestionUsuarios.js , funcion->usuarios_elimi()"
+//             console.log(data);
+//             swal(mensaje);
+
+//         }
+//       });
+
+//     } else {
+//       swal("Cancelado!");
+//     }
+//   });
+
+// }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////DATOS DE DESCUENTO Y CANTIDAD ////////////////////////////////////////////////////////////////////////////////////////
+var id = '';
+var idcan = '';
+$('body').on('click','.abrirmodal',function(){
+  $('#IDcantidad').val('');
+  idcan = '',
+  idcan=$(this).val();
+  $('#id_Procu_DE').val('');
+   id='';
+   id=$(this).val();// este es el id del prodcuto que le va a servir al ingresar la pomocion del producto
+   var informacion = new Array();
+    i=0;
+    $(this).parents("tr").find("td").each(function()
+    {
+   informacion[i]=$(this).html();
+    i++;    
+   })
+   cargartablaDescuento();
+   $('#modaiddescuentoCantidad').modal('show');
+   
+   $('#id_Procu_DE').val(informacion[0]);
+   $('#IDcantidad').val(informacion[4]);
+   $('#IDcantidad1').attr({"min":informacion[4]});
+   idcan = informacion[4];
+ });
+ ////////////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////ingrezar ////////////////////////////////////////////////////////////////////////////////////////
+ 
+ function ingresarCantidaDescuento(){ 
+    if(parseInt($('#IDcantidad1').val())>idcan ){
+      swal({
+        title: 'ERROR',
+        text: "No puede colocar en promocion lo que no hay en stock",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    }else if(parseInt($('#IDcantidad1').val())<=0){
+      swal({
+        title: 'ERROR',
+        text: "No puede colocar en promocion lo que no hay en stock",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    }else if($('#IDcantidad1').val().trim() == ""){
+      swal({
+        title: 'ERROR',
+        text: "Campo Cantidad Vacia",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    }else if($('#IDdescuento').val().trim() == ""){
+      swal({
+        title: 'ERROR',
+        text: "Campo descuento Vacia",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    }else if(parseInt($('#IDdescuento').val())<=0){
+      swal({
+        title: 'ERROR',
+        text: "No se puede colocar un descuento menor o igual a cero",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    }else if($('#IDfechaFN').val()<=$('#IDfechaI').val()){
+      swal({
+        title: 'ERROR',
+        text: "No puede colocar una fecha menor menor o igual que la de inicio",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    }else if($('#IDfechaI').val().trim() == ""){
+      swal({
+        title: 'ERROR',
+        text: "Campo fecha inicio Vacia",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    }else if($('#IDfechaFN').val().trim() == ""){
+      swal({
+        title: 'ERROR',
+        text: "Campo fecha final Vacia",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    }else
+    {
+      
+    swal({
+        title: 'Estas seguro de esto?',
+        text: "Si aceptas, se creará una nueva promocion al producto!",
+       
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) =>{
+      if (willDelete) {
+        var FrmData = {
+          idProducto: id,
+          descuento:$('#IDdescuento').val(),
+          stock: $('#IDcantidad1').val(),
+          fecha_inicio: $('#IDfechaI').val(),
+          fecha_fin: $('#IDfechaFN').val(),
+          
+        }
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        
+        $.ajax({
+            url: servidor+''+'/api/v0/descuentoCantidad_store/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
+            method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+            data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+            success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+            {
+             
+              cargartablaDescuento();
+              cargar_tablaProductos('');
+              limpiar();
+              // console.log(data)
+              if(data['code'] == "200"){
+                swal("ACCION EXITOSA!", "Datos Guardados", "success");
+              }else{
+                swal("ERROR",data['message'], "success");
+              
+              }
+            
+            
+            },
+            
+            error: function () {
+              mensaje = "OCURRIO UN ERROR: Archivo->GestionProductodescuento.js";
+              swal(mensaje);
+      
+          }
+        });  
+      } else {
+        swal("Cancelado!");
+     
+      }
+    });
+   
+  }
+  
 }
- //mostrar de producto y promocion
- function cargar_tablaProductosPromocion() {
+function limpiar() {
+  $('input[type="number"]').val(null);
+  $('input[type="date"]').val(null);
+}
+function cargartablaDescuento() {
 
 	var FrmData=
 	{
@@ -216,14 +525,16 @@ var id = '';
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    
 
     $.ajax({
-        url: servidor+'/api/v0/ProductoPromociones_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url: servidor+'/api/v0/descuentoCantidad_filtro/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
         method: "GET",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
-          crear_tablaProductos_Promocion(data);
+        	
+          crear_tablaDescuentoCantidad(data);
         	//console.log(data);
         },
         error: function () {
@@ -232,74 +543,127 @@ var id = '';
         }
 	});
 }
-function crear_tablaProductos_Promocion(data) {
+function crear_tablaDescuentoCantidad(data) {
+
   var ancho = '16%';
-  $('#tablaProductoPromocion').html('');
-  $('#tablaProductoPromo').html('');
+  var anchos= '5%';
+  $('#tablaDescuentoCantidad').html('');
+  $('#tablaDescuentoCant').html('');
 
-  $('#tablaProductoPromocion').DataTable({
-      destroy: true,
-      order: [],
-
-      data: data[0].promociones_producto,
+  $('#tablaDescuentoCantidad').DataTable({
+     destroy: true,
+    order: [],
+    data: data.items,
       'createdRow': function (row, data, dataIndex) {
         //console.log(data);
       },
       'columnDefs': [
           {
-             'targets': 3,
-             'data':'data',
+             'targets':4,
+             'data':'item.id_item',
              'createdCell':  function (td, cellData, rowData, row, col) {
 
              },
           }
        ],
       columns: [
+         {
+              width:anchos,
+              data: null,
+              render: function (data, type, row) {
+                var html='';
+                if(data.estado_del>0)
+                {
+                     var html = `<i class="fa fa-circle" ></i>`;
+                }else
+                {
+                     html = ` `;
+                }
+                     return `${html}`;
+                     
+  
+              }
+              
+          },
           {
-              title: 'Promocion',
+              title: 'Descuento',
               width:ancho,
-              data: 'promociones.descripcion'
+              data: 'descuento'
           },
           {
-              title: 'Fecha Inicio',
+              title: 'Cantidad',
               width:ancho,
-              data: 'fecha_inicio'
+              data: 'stock'
           },
           {
-            title: 'Fecha fin',
-            width:ancho,
-            data: 'fecha_fin'
-          },
-          {
-            title: 'Precio',
-            width:ancho,
-            data: 'precio'
-          },
-          {
-            title: 'ACCIONES',
-            width:ancho,
-            data: null,
-            render: function (data, type, row) {
-              var html = "<button type='button'  class='btn btn-sm btn-danger eliminarProductoPromocion' value="+data.nome_token+" '><i class='fa fa-trash' aria-hidden='true'></i></button>";
             
-              return `${html}`;
+            title: 'fecha Ingreso',
+            width:ancho,
+            data:null,
+            render: function (data, type, row) {
+              var html='';
+              if(data.estado_del>0)
+              {
+                   var html = `${data.fecha_inicio}`;
+              }else
+              {
+                   html = `${data.fecha_inicio} `;
+              }
+                   return `${html}`;
              
 
             }
-         }
+            
+          },
+    
+          {
+              title: 'fecha-fin',
+              width:ancho,
+              data: null,
+              render: function (data, type, row) {
+                var html='';
+                if(data.estado_del>0)
+                {
+                     var html = ``;
+                }else
+                {
+                     html = ` ${data.fecha_fin}`;
+                }
+                     return `${html}`;
+              
+              }
+          }
+        //   {
+        //     title: 'ACCIONES',
+        //     width:ancho,
+        //     data: null,
+        //     render: function (data, type, row) {
+        //       var html='';
+        //       if(data.estado_del>0)
+        //       {
+        //            var html = `<button type="button" class="btn btn-sm btn-danger eliminardesc" value="${data.id}"><i class="fa fa-trash" aria-hidden="true"></i></button>`;
+        //       }else
+        //       {
+        //            html = `    
+        //        `;
+        //       }
+        //            return `${html}`;
+             
+
+        //     }
+        //  }
       ],
 
   });
 }
-$('body').on('click','.eliminarProductoPromocion',function(){
-  PromocionProducto_eliminar($(this).val());
- });
- ///FUNCION DE ELIMINAR UNA PROMOCION A UN PRODUCTO SI FUE MAL ENVIADA
- function PromocionProducto_eliminar(nome_token) {
-
+$('body').on('click','.eliminardesc',function(){
+  EliminarDescuento($(this).val());
+  });
+function EliminarDescuento(id) {
+  
   var FrmData=
   {
-    nome_token:  nome_token,
+    id: id,
   }
 
   $.ajaxSetup({
@@ -320,19 +684,18 @@ $('body').on('click','.eliminarProductoPromocion',function(){
     {
 
       $.ajax({
-        url: servidor+'/api/v0/ProductoPromociones_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url: servidor+'/api/v0/descuentoCantidad_delete/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
         method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
           swal("ACCION EXITOSA!", "Datos Eliminados", "success");
-          console.log(data);
-          cargar_tablaProductosPromocion();
-        
+          //console.log(data);
+          cargartablaDescuento();
         },
         error: function (data) {
             mensaje = "OCURRIO UN ERROR: Archivo->GestionUsuarios.js , funcion->usuarios_elimi()"
-            console.log(data);
+        
             swal(mensaje);
 
         }
@@ -345,5 +708,4 @@ $('body').on('click','.eliminarProductoPromocion',function(){
 
 }
 
-///FUNCION DE ELIMINAR UNA PROMOCION A UN PRODUCTO SI FUE MAL ENVIADA
 

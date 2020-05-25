@@ -12,7 +12,7 @@
 	          <span class="text-white" aria-hidden="true">&times;</span>
 	        </button>
 	  	</div>
-
+ 
 	  	<div class="modal-body">
 
 			<form id="frmProductos_modificar" class="needs-validation">

@@ -19,9 +19,15 @@
     font-size: 27px;
     padding: 10px;
 }
-
+.colorbuton:focus{
+    border-color: #fff;
+    text-align: center;
+    font-weight: bold;
+   font-size: large;
+   background-color: #f0ad4e;
+  }
 .bigicon {
-    font-size: 35px;
+    font-size: 20px;
     color: #36A0FF;
 }
 .slider {

@@ -14,6 +14,13 @@ table.dataTable {
    * Body styles
    */
 }
+.tablabuton:focus{
+  border-color: #fff;
+  text-align: center;
+  font-weight: bold;
+ font-size: large;
+ background-color:#e7caa2;
+}
 table.dataTable thead th,
 table.dataTable tfoot th {
   font-weight: bold;

@@ -17,14 +17,23 @@
    
     {{-- @include('z_admin.Usuarios.frm')
     @include('z_admin.Productos.frm')
-    @include('z_admin.Promociones.modal')
+    @include('z_admin.Promociones.modalDuplicado')
     @include('z_admin.Pedidos.frm')
     @include('z_admin.Ventas.frm')
+    @include('z_admin.Promociones.registroPromocion')
+    @include('z_admin.TipoPromocion.registroTipo')
+    @include('z_admin.TipoPromocion.ModificarTipo')
+    @include('z_admin.PromocioneDelProducto.registro')
+    @include('z_admin.kits.RegistroKits')
+ 
     @include('z_admin.Reportes.frm') --}}
 </div>
 <section id="breadcrumb">
+
   <div class="container">
     <ol class="breadcrumb">
+
+
       <li class="active" >Panel de Control</li>
     </ol>
   </div>
@@ -35,6 +44,8 @@
       <div class="row">
         <div class="col-md-3">
           <div class="list-group">
+          <br>
+
             <a href="index.html" class="list-group-item active color-principal">
               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Panel de Control
             </a>
@@ -43,7 +54,9 @@
             <a style="cursor:pointer;" id="btnVerFrmProductos"  class="list-group-item"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> Productos <span class="badge">39</span></a>
             <a style="cursor:pointer;" id="" class="list-group-item"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Pedidos <span class="badge">112</span></a>
             <a style="cursor:pointer;" id=""  class="list-group-item"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Ventas <span class="badge">39</span></a>
-            <a style="cursor:pointer;" id="" class="list-group-item"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Promociones <span class="badge">112</span></a>
+            <a style="cursor:pointer;" id="btnVerFrmPromocion" class="list-group-item"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Promociones <span class="badge">112</span></a>
+            <a style="cursor:pointer;" id="btnVerFrmkits" class="list-group-item"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Kits<span class="badge">112</span></a>
+            <a style="cursor:pointer;" id=""  class="list-group-item"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Ubicación <span class="badge">39</span></a>
             <a style="cursor:pointer;" id="" class="list-group-item"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Reportes <span class="badge">112</span></a>
           </div>
           
@@ -64,7 +77,8 @@
         </div>
         <div class="col-md-9">
           <!-- Vista rápida del sitio -->
-          <div class="panel panel-default">
+          <br>
+      
             <div id="fondo" style="height: 100%" class="card">
                 
             <div class="card-body">
@@ -74,19 +88,32 @@
                 
                 @include('z_admin.Pedidos.frm')
                 @include('z_admin.Ventas.frm')
-                @include('z_admin.Reportes.frm') --}}
+                @include('z_admin.Reportes.frm') 
+              
+                @include('z_admin.kits.RegistroKits')
+          
+                --}}
 
                 <picture>
                     <img class="img-fluid" style="width: 100%" src="{{asset('img/supercito.jpg')}}">
                 </picture>
             </div>
            
-            </div>
+          </div>
            
                     @include('z_admin.TipoUsuarios.frm')
                     @include('z_admin.Usuarios.frm')
                     @include('z_admin.Productos.frm')
-                    @include('z_admin.Promociones.modal')
+                    @include('z_admin.Promociones.modalDuplicado')
+                    @include('z_admin.Promociones.tablaPromociones')    
+                    @include('z_admin.Promociones.registroPromocion')
+                    @include('z_admin.TipoPromocion.registroTipo')
+                    @include('z_admin.PromocioneDelProducto.registro')
+                   
+                    @include('z_admin.kits.RegistroKits')
+                   
+                
+                    
             {{-- <div class="panel-heading main-color-bg">
               <h3 class="panel-title">Vista Rápida</h3>
             </div>
@@ -158,7 +185,7 @@
                   </table>
               </div> --}}
             </div>
-        </div>
+        
       </div>
     </div>
   </section>
@@ -174,9 +201,17 @@
                 @include('z_admin.TipoUsuarios.frm')
                 @include('z_admin.Usuarios.frm')
                 @include('z_admin.Productos.frm')
-                @include('z_admin.Promociones.modal')
+                @include('z_admin.Promociones.modalDuplicado')
+                @include('z_admin.Promociones.Frm')
+                @include('z_admin.Promociones.tablaPromociones')
+                @include('z_admin.Promociones.registroPromocion')
+                @include('z_admin.PromocioneDelProducto.registro')
+            
                 @include('z_admin.Pedidos.frm')
                 @include('z_admin.Ventas.frm')
+                @include('z_admin.TipoPromocion.registroTipo')
+                @include('z_admin.kits.RegistroKits')
+                
                 @include('z_admin.Reportes.frm')
             </div>
 
@@ -204,7 +239,9 @@
     {{-- <script src="{{ asset('js/GestionProductosJSON.js') }}" defer></script> --}}
     <script src="{{ asset('js/GestionProducto.js') }}" defer></script>
     <script src="{{ asset('js/GestionReportes.js') }}" defer></script>
-    <script src="{{ asset('js/GestionPromocion.js') }}" defer></script>
+    <script src="{{ asset('js/GestionPromocion.js')}}" defer></script>
+    <script src="{{ asset('js/GestionKits.js')}}" defer></script>
+  
     <script>
         function printDiv(nombreDiv) {
             var contenido= document.getElementById(nombreDiv).innerHTML;

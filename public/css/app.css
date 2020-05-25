@@ -171,7 +171,7 @@ sub {
 }
 
 .bigicon {
-  font-size: 35px;
+  font-size: 20px;
   color: #36A0FF;
 }
 
@@ -9569,6 +9569,13 @@ button.bg-dark:focus {
   .mt-lg-5,
   .my-lg-5 {
     margin-top: 3rem !important;
+  }
+  .tablabuton:focus{
+    border-color: #fff;
+    text-align: center;
+    font-weight: bold;
+   font-size: large;
+   background-color: #e7caa2;
   }
 
   .mr-lg-5,

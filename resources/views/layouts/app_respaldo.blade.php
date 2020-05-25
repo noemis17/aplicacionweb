@@ -15,7 +15,10 @@
     <script src="{{ asset('js/jquery.dataTables.js') }}" defer></script>
     <script src="{{ asset('js/jquery.dataTables.js') }}" defer></script>
     {{--<script src="{{ asset('js/bootstrap-toggle.js') }}" defer></script>--}}
-
+    <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2-bootstrap.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/select2.min.js') }}" defer></script>
     <!-- Fonts -->
     {{--<link rel="dns-prefetch" href="//fonts.gstatic.com">--}}
     {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}

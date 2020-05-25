@@ -51,17 +51,17 @@ class TipoPromocionController extends Controller
 
         }else{
            
-           //return response()->json(User::where('nome_token',$nome_token_user)->first());
+          
             $validad = User::where('nome_token',$nome_token_user)->first();
-            //return response()->json($validad['estado_del']);
+       
             if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
-                //return response()->json("EROR");
+               
             } else {
                 
                 $code = '200';
 
                 $items = new TipoPromocion();
-                $items->descripcion = $request->descripcion;
+                $items->descripcion =ltrim(rtrim(mb_strtoupper($request->descripcion,'UTF-8')));
                 $items->estado_del = '1';
                 $items->nome_token = str_replace($ignorar,"",bcrypt(Str::random(10)));
                
@@ -191,6 +191,7 @@ class TipoPromocionController extends Controller
      */
     public function destroy($nome_token_user='',Request $request)
     {
+        
         $code='';
         $message ='';
         $items ='';
@@ -207,13 +208,15 @@ class TipoPromocionController extends Controller
 
             if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
                 //no existe ese usuarios o fue dado de baja.
-            } else {
-
+            } else { 
+              
+                $tipo = TipoPromocion:: withCount(['registro'])->where("nome_token",$request->nome_token)->first();
+              
+                if($tipo->registro_count==0){
+                $tipo->delete();
                 $code = '200';
-                $items = TipoPromocion::where("nome_token",$request->nome_token)->first();
-                $items->estado_del='0';
-                $items->update();
-                $message = 'OK';      
+                $message = 'OK';    
+                }
                       
             }
 
@@ -228,13 +231,12 @@ class TipoPromocionController extends Controller
         return response()->json($result);       
     }
     //mostrar los tipo de promociones
-    public function Filtro($nome_token_user='',Request $request)
-    {
 
+    public function Buscar($nome_token_user='',Request $request)
+    {
         $code='';
         $message ='';
         $items ='';
-
         if (empty($nome_token_user)) {
 
             $code='403';
@@ -249,10 +251,16 @@ class TipoPromocionController extends Controller
                 //no existe ese usuarios o fue dado de baja.
             } else {
 
+
                 $code = '200';
-                $items = TipoPromocion::where([["estado_del","1"],["descripcion","like","%$request->value%"]])->get();
-                $message = 'OK';      
-                      
+                
+                if(trim($request->term) == ''){
+                    $items = TipoPromocion::where([["estado_del","1"]])->limit(10)->get(['id','descripcion as text']);
+                }else{
+                    $items = TipoPromocion::where([["estado_del","1"],["descripcion","like",'%'.$request->term.'%']])->limit(10)->get(['id', 'descripcion as text']);
+                }
+
+                $message = 'OK';
             }
 
         }
@@ -265,5 +273,30 @@ class TipoPromocionController extends Controller
             
         return response()->json($result);
     }
+    //esta funcion nos permite eliminar todo los tipos que tengan que no tenganregistroPromocion
+    public function ObtenerTipoRelacionado(Request $request)
+    {
+        
+        $code='';
+        $message ='';
+        $items ='';
+
+             
+                $code = '200';
+                 $items = TipoPromocion:: withCount(['registro'])->get();
+               
+                $message = 'OK';
+
+
+        $result =   array(
+                        'items'     => $items,
+                        'code'      => $code,    
+                        'message'   => $message
+                    );
+        //
+        return response()->json($result);
+    }
+
+
 
 }
