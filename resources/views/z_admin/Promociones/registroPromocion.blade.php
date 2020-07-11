@@ -48,33 +48,33 @@
 								<select name = "cmbTipoPromocion" id = "cmbTipoPromocion" class ="form-control pull-right" > </select> 
                             </div>
                             <br>
+                            <label>Descuento</label>
+                            <div class="input-group"  >
+                                <div class="input-group-addon"><i class="fa fa-building "></i></div>
+                                <input  type="number" class="form-control pull-right" id="ID_DESCUENTOS">
+                            </div>
+                            <br>
                             <label>Fecha de inicio</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
                                 <input  type="date" class="form-control pull-right " id="FECHA_INGRESO">
                             </div>
                         </div>  
-                      
-                        <div class="col-md-3">
-                             <br>
+                  
+                        <div class="col-md-6">
+                        <br> 
 			                 <br>
-                             <label>Descuento</label>
+                        <label>Nombre de la promoción</label>
                             <div class="input-group"  >
                                 <div class="input-group-addon"><i class="fa fa-building "></i></div>
-                                <input  type="number" class="form-control pull-right" id="ID_DECUENTO">
+                                <input  type="text" class="form-control pull-right " id="ID_Nombre">
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                             <br>
-			                 <br>
-                             <label>Cantidad</label>
+                          <br>
+                        <label>Cantidad</label>
                             <div class="input-group"  >
                                 <div class="input-group-addon"><i class="fa fa-building "></i></div>
                                 <input  type="number" class="form-control pull-right " id="ID_CANTIDAD">
                             </div>
-                        </div>
-                  
-                        <div class="col-md-6">
                           <br>
                             <label>Fecha final </label>
                             <div class="input-group">
@@ -122,6 +122,6 @@
 	@include('z_admin.TipoPromocion.registroTipo')
 </div>
 
-<script src="{{ asset('js/GestionPromocion.js') }}" defer></script>
+<!-- <script src="{{ asset('js/GestionPromocion.js') }}" defer></script> -->
 
 

@@ -12,7 +12,7 @@
                 @include('z_admin.TipoUsuarios.frm')
                 @include('z_admin.Usuarios.frm')
                 @include('z_admin.Productos.frm')
-                @include('z_admin.Promociones.modalDuplicado')
+               
                 @include('z_admin.Promociones.Frm')
                 @include('z_admin.Promociones.registroPromocion')
                 @include('z_admin.PromocioneDelProducto.registro')

@@ -99,24 +99,34 @@ Route::put('/v0/tipo_promociones_update/{nome_token_user?}/{data?}','TipoPromoci
 Route::delete('/v0/tipo_promociones_delete/{nome_token_user?}/{data?}','TipoPromocionController@destroy')->name('api.v0.tipo_promociones.delete');
 Route::get('/v0/tipo_promociones_Buscar/{nome_token_user?}/{data?}','TipoPromocionController@Buscar')->name('api.v0.tipo_promociones.Buscar');
 Route::get('/v0/tipo_ObtenerTipoRelacionado/{data?}','TipoPromocionController@ObtenerTipoRelacionado')->name('api.v0.tipo_ObtenerTipoRelacionado.ObtenerTipoRelacionado');
+Route::get('/v0/tipo_ConsultarTipoPromocionesPorRegistrosActivos/{data?}','TipoPromocionController@ConsultarTipoPromocionesPorRegistrosActivos')->name('api.v0.tipo.ConsultarTipoPromocionesPorRegistrosActivos');
+//Route::get('/v0/tipo_ConsultarTipoPromocionesPorRegistrosActivosPorid/{data?}','TipoPromocionController@ConsultarTipoPromocionesPorRegistrosActivosPorid')->name('api.v0.tipo.ConsultarTipoPromocionesPorRegistrosActivosPorid');
+
 //EL REGISTRO DE PROMOCIONES
 Route::post('/v0/RegistroPromociones_store/{data?}','RegistroPromocionesController@store')->name('api.v0.RegistroPromociones.store');
 Route::get('/v0/RegistroPromociones_filtro/{data?}','RegistroPromocionesController@filtro')->name('api.v0.RegistroPromociones.filtro');
 Route::delete('/v0/RegistroPromociones_delete/{data?}','RegistroPromocionesController@destroy')->name('api.v0.RegistroPromociones.delete');
 Route::get('/v0/RegistroPromociones_buscar/{data?}','RegistroPromocionesController@BuscarPromocion')->name('api.v0.RegistroPromociones.BuscarPromocion');
+Route::put('/v0/RegistroPromociones_publicidad/{data?}','RegistroPromocionesController@publicidad')->name('api.v0.RegistroPromociones.publicidad');
+Route::get('/v0/RegistroPromociones_filtroRegistro/{data?}','RegistroPromocionesController@filtroRegistro')->name('api.v0.RegistroPromociones.filtroRegistro');
 // PROMOCIONES POR KIT
 Route::post('/v0/kit_store/{data?}','KitController@store')->name('api.v0.kit.store');
 Route::get('/v0/kit_filtro/{data?}','KitController@filtro')->name('api.v0.kit.filtro');
 Route::delete('/v0/kit_delete/{data?}','KitController@destroy')->name('api.v0.kit.delete');
 Route::put('/v0/kit_update/{data?}','KitController@update')->name('api.v0.kit.update');
+
 //PROMOCIONES POR UN PRODUCTO
 Route::post('/v0/descuentoCantidad_store/{data?}','PromocionDelProductoController@store')->name('api.v0.descuentoCantidad.store');
 Route::get('/v0/descuentoCantidad_filtro/{data?}','PromocionDelProductoController@Filtro')->name('api.v0.descuentoCantidad.filtro');
 Route::delete('/v0/descuentoCantidad_delete/{data?}','PromocionDelProductoController@destroy')->name('api.v0.descuentoCantidad.delete');
 Route::get('/v0/ProductosActivas/{data?}','PromocionDelProductoController@ProductosActivas')->name('api.v0.promociones.ProductosActivas');
+Route::get('/v0/ProductosPorid/{data?}','PromocionDelProductoController@ProductosPorid')->name('api.v0.promociones.ProductosPorid');
 
+//compra
+Route::post('/v0/ComprarProducto/{data?}','CompraController@ComprarProducto')->name('api.v0.compras.ComprarProducto');
+Route::post('/v0/OrdenesCompradas/{data?}','OrdenController@ConsultarComprasHechas')->name('api.v0.compras.OrdenesPorUsuario'); 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+Route::get('/v0/Filtro/{data?}','TipoPagoController@Filtro')->name('api.v0.tipoPago.Filtro');
 //DPF
 
 Route::get('/v0/pdf', function () {

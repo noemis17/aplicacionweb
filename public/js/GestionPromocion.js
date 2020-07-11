@@ -36,7 +36,7 @@ var servidor="http://127.0.0.1:8000";
   });
 
   ////////////////////////////////////////LIMPIAR //////////////////////////////////////////////
-  function limpiar() {
+  function limpiarregistro() {
   $('input[type="text"]').val(null);
   $('input[type="number"]').val(null);
   $('input[type="date"]').val(null);
@@ -45,8 +45,15 @@ var servidor="http://127.0.0.1:8000";
 
   //////////////////////////////////REGISTRO PROMOCION/////////////////////////////////////////////////////
   function ingresarRegistroPromocion(){ 
-    
-      if($('#ID_DECUENTO').val().trim() == ""){
+      if(($('#ID_Nombre').val()) == ""){
+        swal({
+          title: 'ERROR',
+          text: "Campo  Nombre Vacia",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        }) 
+      }else if(parseInt($('#ID_DESCUENTOS').val()) == ""){
         swal({
           title: 'ERROR',
           text: "Campo  descuento Vacia",
@@ -54,7 +61,7 @@ var servidor="http://127.0.0.1:8000";
           buttons: true,
           dangerMode: true,
         })
-      }else if(parseInt($('#ID_DECUENTO').val())<=0){
+      }else if(parseInt($('#ID_DESCUENTOS').val())<=0){
         swal({
           title: 'ERROR',
           text: "No puede existir un  descuento igual o menor a cero",
@@ -115,13 +122,12 @@ var servidor="http://127.0.0.1:8000";
       }).then((willDelete) =>{
         if (willDelete) {
           var FrmData = {
-
             idTipoPromocion:$('#cmbTipoPromocion').val(),
-            descuento:$('#ID_DECUENTO').val(),
+            descripcion:$('#ID_Nombre').val(),
+            descuento:$('#ID_DESCUENTOS').val(),
             cantidad:$('#ID_CANTIDAD').val(),
             fecha_inicio:$('#FECHA_INGRESO').val(),
-            fecha_fin:$('#FECHA_FINAL').val(),
-            
+            fecha_fin:$('#FECHA_FINAL').val(), 
           }
           $.ajaxSetup({
             headers: {
@@ -136,16 +142,12 @@ var servidor="http://127.0.0.1:8000";
               success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
               {
                 cargar_tablaRegistro();
-                limpiar();
-                // console.log(data)
+                limpiarregistro();
                 if(data['code'] == "200"){
                   swal("ACCION EXITOSA!", "Datos Guardados", "success");
                 }else{
                   swal("ERROR",data['message'], "success");
-                
                 }
-              
-              
               },
               
               error: function () {
@@ -182,6 +184,7 @@ function cargar_tablaRegistro() {
           data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
           success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
           {
+          
             llenar_tabla_Registro(data);
           },
           error: function () {
@@ -207,7 +210,7 @@ function cargar_tablaRegistro() {
         },
         'columnDefs': [
             {
-               'targets':4,
+               'targets':5,
                'data':'item.id_item',
                'createdCell':  function (td, cellData, rowData, row, col) {
   
@@ -239,6 +242,11 @@ function cargar_tablaRegistro() {
                 data: 'tipo_promocion[0].descripcion'
             },
             {
+              title: 'Nombre de la promoción',
+              width:ancho,
+              data: 'descripcion'
+          },
+            {
                 title: 'Descuento',
                 width:ancho,
                 data: 'descuento'
@@ -266,32 +274,21 @@ function cargar_tablaRegistro() {
               data: null,
               render: function (data, type, row) {
                 var html='';
-                if(data.kits_count>0)
+                if(data.publicado==null)
                 {
-                     var html = `
-                     `;
-                }else
-                {
-                     html = `<button type="button" class="btn btn-sm btn-danger eliminarRegistro" value="${data.id}"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                     `;
-                }if(data.publicado==null && data.estado_del>0)
-                {
-                     var html = `<button type="button" class="btn btn-sm btn-success modalpublicado" value="${data.id}"><i class="fa fa-files-o"></i></button>
-                     `;
-                }else
-                {
-                     html = `
-                     `;
+                   html += `<button type="button" class="btn btn-sm btn-danger eliminarRegistro" value="${data.id}"><i class="fa fa-trash" aria-hidden="true"></i></button> `;
+                }
+                if(data.publicado==null && data.kits_count>0){
+                  html += `<button  type="button" class="btn btn-sm btn-success modalpublicado1" style="margin: 10px" value="${data.id}"><i class="fa fa-bullhorn"></i></button>`;
                 }
                      return `${html}`;
-               
-  
               }
            }
         ],
   
     });
   }
+
   $('body').on('click','.eliminarRegistro',function(){
     EliminarRegistro($(this).val());
     cargar_tablaRegistro();
@@ -346,10 +343,43 @@ function cargar_tablaRegistro() {
     
     }
 
-    $('body').on('click','.modalpublicado',function(){ 
-      $('#Modal_publicado').modal('show');
+    $('body').on('click','.modalpublicado1',function(e){ 
+     
+      cargar_tablaPublicado($(this).val());
+   
      });
-
+     function cargar_tablaPublicado(idregi) {
+    
+      var FrmData=
+      {
+         id:idregi,
+      }
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+  
+      $.ajax({
+          url: servidor+'/api/v0/RegistroPromociones_publicidad/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+          method: "PUT",             // Tipo de solicitud que se enviará, llamado como método
+          data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+          success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+          {
+            if(data['code'] == "200"){
+              cargar_tablaRegistro();
+              swal("ACCION EXITOSA!", "Datos Guardados", "success");  
+            }else{
+              swal("ERROR!",data['items'], "success");  
+            }
+          
+          },
+          error: function () {
+              mensaje = "OCURRIO UN ERROR en la función cargar_tablaProductoPromo1() ";
+                 swal(mensaje);
+          }
+      });
+}
   // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // ////////////////////////////////////DaATOS TIPO PROMOCIÓN///////////////////////////////////////////////////////
   // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -358,7 +388,7 @@ function cargar_tablaRegistro() {
     cargar_tablaTipo('');
  
     $('#Modal_TipoPro').modal('show');
-    });
+  });
     function validarEjecucion(){
       if($("#boton").val()=="guardar"){
         ingresarTipoPromocion();

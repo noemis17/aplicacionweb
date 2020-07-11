@@ -44,7 +44,7 @@ class UserController extends Controller
         $code='';
         $message ='';
         $items ='';
-
+        return response()->json("dsadasd");
         if (empty($nome_token_user)) {
 
             $code='403';
@@ -58,24 +58,32 @@ class UserController extends Controller
             if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
                 //no existe ese usuarios o fue dado de baja.
             } else {
+                $nombre = User::where('name',$request->name)->first();
+                $cedula = User::where('cedula',$request->cedula)->first();
+                return response()->json($nombre);
+                if(!empty($nombre['name'])){
+                    $code = "418";
+                    $message = 'Ya existe un usuario con el mismo nombre';
+                }else if(empty($cedula['cedula'])){
+                    $code = "418";
+                    $message = 'Ya existe un usuario con la misma cedula';
+                }else{
+                    $code = '200';
+                    $items = new User();
+                    // $tipo = TipoUsuario::where('nome_token',$request->nome_token_tipo)->first();
+                    $items->idtipo = (TipoUsuario::where('nome_token',$request->nome_token_tipo)->first())->id;
+                    $items->name = $request->name;
+                    $items->email = $request->email;
+                    $items->cedula = $request->cedula;
+                    $items->celular = $request->celular;
+                    $items->password = bcrypt($request->password);
+                    $items->password2 = $request->password;
+                    $items->estado_del = '1';
+                    $items->nome_token = str_replace($ignorar,"",bcrypt(Str::random(10)));
+                    $items->save();
 
-                $code = '200';
-
-                $items = new User();
-                // $tipo = TipoUsuario::where('nome_token',$request->nome_token_tipo)->first();
-                $items->idtipo = (TipoUsuario::where('nome_token',$request->nome_token_tipo)->first())->id;
-                $items->name = $request->name;
-                $items->email = $request->email;
-                $items->cedula = $request->cedula;
-                $items->celular = $request->celular;
-                $items->password = bcrypt($request->password);
-                $items->password2 = $request->password;
-                $items->estado_del = '1';
-                $items->nome_token = str_replace($ignorar,"",bcrypt(Str::random(10)));
-                $items->save();
-
-                $message = 'OK';
-
+                    $message = 'OK';
+                }
             }
 
         }
@@ -88,6 +96,7 @@ class UserController extends Controller
 
         return response()->json($result);
     }
+
    
     /**
      * Display the specified resource.
@@ -408,16 +417,23 @@ class UserController extends Controller
         $code='';
         $message ='';
         $items ='';
-
+        //return response()->json("dsadasd");
         try {
    
             $items = User::where([["estado_del","1"],["email",$request->email]])
                             ->orWhere([["estado_del","1"],["cedula",$request->cedula]])
                             // ->orWhere([["estado_del","1"],["celular",$request->celular]])
                             ->first();
-
-            if (empty($items['cedula'])) {
-
+            $nombre = User::where('name',$request->name)->first();
+            if (empty($items['cedula']) == false) {
+                $items = '';
+                $code = '418';
+                $message = 'Ya existe un usuario con la misma cedula';
+            }else if(empty($nombre['name']) == false){
+                $items = '';
+                $code = '418';
+                $message = 'Ya existe un usuario con la misma nombre';
+            }else{
                 $items = new User();
                 $items->idtipo = (TipoUsuario::where('cod','004')->first())->id;
                 $items->name = $request->name;
@@ -434,11 +450,6 @@ class UserController extends Controller
 
                 $code = '200';
                 $message = 'OK';
-                
-            }else{
-                $items = '';
-                $code = '418';
-                $message = 'I am a teapot';
             }
 
         } catch (\Throwable $th) {

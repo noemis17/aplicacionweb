@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class RegistroPromociones extends Model
@@ -18,4 +18,11 @@ class RegistroPromociones extends Model
     {
         return $this->hasMany('App\kit', 'idRegistro', 'id');
     } 
+    public function kits2()
+    {
+        return $this->hasMany('App\kit', 'idRegistro', 'id')->with("ProductoKit2");
+    } 
+   
+   
+
 }

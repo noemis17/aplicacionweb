@@ -10,7 +10,12 @@ class kit extends Model
         
         return $this->hasMany('App\Producto','id', 'idProducto');
     }
+    public function  ProductoKit2(){
+        
+        return $this->hasOne('App\Producto','id', 'idProducto');
+    }
     public function RegistroKit(){
         return $this->hasOne('App\RegistroPromociones','id', 'idRegistro');
     }
+    
 }

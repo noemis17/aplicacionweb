@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 class TipoPromocionController extends Controller
 {
     /**
@@ -297,6 +298,72 @@ class TipoPromocionController extends Controller
         return response()->json($result);
     }
 
+    public function ConsultarTipoPromocionesPorRegistrosActivos(Request $request)
+    {
+        
+        $code='';
+        $message ='';
+        $items ='';
+
+             
+                $code = '200';
+                $items = TipoPromocion::with(['registro2'=> function($query) {
+                    //return 90*1; 
+                }])->where('estado_del','1')->has('registro2', '>', 0)->get();
+                $formatted_tags = [];
+                foreach ($items as $item) {
+                    $registro2 = [];
+                    //llena los registros activos de cada promocion
+                    foreach($item->registro2 as $registro){
+                        $SumaProductos = 0;
+                        foreach($registro->kits2 as $valor){
+                            
+                            $SumaProductos = $SumaProductos + $valor->ProductoKit2->PRICE;
+                        }
+                        $ValorDescontado = $SumaProductos * ($registro->descuento/100);
+                        $PrecioPromocion = $SumaProductos - $ValorDescontado;
+                        $registro2[]=
+                        [
+                            'id'=>$registro->id,
+                            'idTipoPromocion'=>$registro->idTipoPromocion,
+                            'descripcion'=>$registro->descripcion,
+                            'descuento'=>$registro->descuento,
+                            'cantidad'=>$registro->cantidad,
+                            'publicado'=>$registro->publicado,
+                            'fecha_inicio'=>$registro->fecha_inicio,
+                            'fecha_fin'=>$registro->fecha_fin,
+                            'created_at'=>$registro->created_at,
+                            'updated_at'=>$registro->updated_at,
+                            'PrecioSinDescuento' => $SumaProductos,
+                            'ValorDescontado' => $ValorDescontado,
+                            'PrecioPromocionConDescuento' => $PrecioPromocion,
+                        ];
+                    }
+                    //llena tipos promociones
+                    $formatted_tags[] = 
+                    [
+                        'id' => $item->id,
+                        'descripcion' => $item->descripcion,
+                        'estado_del'=>$item->estado_del,
+                        'nome_token'=>$item->nome_token,
+                        'created_at'=>$item->created_at,
+                        'updated_at'=>$item->updated_at,
+                        'registro2' =>$registro2
+                    ];
+                }
+                $message = 'OK';
+
+
+        $result =   array(
+                        'items'     => $formatted_tags,
+                        'code'      => $code,    
+                        'message'   => $message
+                    );
+        //
+        return response()->json($result);
+    }
+    
+   
 
 
 }

@@ -7,6 +7,7 @@ use App\Producto;
 use App\RegistroPromociones;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class KitController extends Controller
 {
@@ -160,7 +161,7 @@ class KitController extends Controller
         $items ='';
                 $code = '200';
                  //$items =kit::with(['ProductoKit'])->get();
-                 $items =kit::with(['ProductoKit'])->where('idRegistro',$request->idRegistro)->get();
+                 $items =kit::with(['ProductoKit2'])->where('idRegistro',$request->idRegistro)->get();
                 $message = 'OK';
 
 
@@ -173,6 +174,7 @@ class KitController extends Controller
         return response()->json($result);
     }
     
- 
+    
 
+    
 }

@@ -200,6 +200,7 @@ class PromocionDelProductoController extends Controller
         //
         return response()->json($result);
     }
+
     public function ProductosActivas(Request $request)
     {
         
@@ -209,7 +210,29 @@ class PromocionDelProductoController extends Controller
 
      
         $code = '200';
-        $items = Producto::with(['PromocionesdelProducto'])->where([["estado_del","1"],["NAME","like","%$request->value%"]])->orderBy('NAME', 'desc')->get();
+        $items = Producto::with(['PromocionesdelProducto'])->where('estado_del','1')->orderBy('NAME', 'desc')->limit(10)->get();
+        $message = 'OK';
+
+        
+
+        $result =   array(
+                        'items'     => $items,
+                        'code'      => $code,
+                        'message'   => $message
+                    );
+        //
+        return response()->json($result);
+    }
+    public function ProductosPorid(Request $request)
+    {
+        
+        $code='';
+        $message ='';
+        $items ='';
+
+     
+        $code = '200';
+        $items = Producto::with(['PromocionesdelProducto'])->where([["estado_del","1"],["id",$request->id]])->orderBy('NAME', 'desc')->limit(20)->first();
         $message = 'OK';
 
         

@@ -71,38 +71,45 @@ class DatabaseSeeder extends Seeder
 
         DB::table('estado_ventas')->insert([
             'cod' => '001',
-            'descripcion' => 'solicitud',
+            'descripcion' => 'Solicitud',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
         DB::table('estado_ventas')->insert([
             'cod' => '002',
-            'descripcion' => 'en_proceso',
+            'descripcion' => 'En_proceso',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
         DB::table('estado_ventas')->insert([
             'cod' => '003',
-            'descripcion' => 'finalizado',
+            'descripcion' => 'Finalizado',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
 
         DB::table('estado_ventas')->insert([
             'cod' => '004',
-            'descripcion' => 'rechazado',
+            'descripcion' => 'Rechazado',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
 
         DB::table('estado_ventas')->insert([
             'cod' => '005',
-            'descripcion' => 'aceptado',
+            'descripcion' => 'Aceptado',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
 
         DB::table('estado_ventas')->insert([
             'cod' => '005',
-            'descripcion' => 'cancelado',
+            'descripcion' => 'Cancelado',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
-
+        DB::table('tipo_pagos')->insert([
+            'identificador' => '1',
+            'descricion' => 'TRANSFERENCIA',
+        ]);
+        DB::table('tipo_pagos')->insert([
+            'identificador' => '2',
+            'descricion' => 'EFECTIVO',
+        ]);
         // DB::table('productos')->insert([
         //     'id_foraneo'          => '4',
         //     'cod_barra'           => '7730698316062',

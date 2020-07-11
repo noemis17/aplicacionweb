@@ -40,8 +40,11 @@ class RegistroPromocionesController extends Controller
         $code='';
         $message ='';
         $items ='';
-        return response()->json($request);
         if($request->idTipoPromocion == null){
+            $code='403';
+            $items = 'null';
+            $message = 'El producto a aplicar la promocion esta vacio';
+        }else if($request->descripcion == null){
             $code='403';
             $items = 'null';
             $message = 'El producto a aplicar la promocion esta vacio';
@@ -78,24 +81,25 @@ class RegistroPromocionesController extends Controller
                     $items = 'null';
                     $message = 'No puede existir un descuento igual o menor a cero';
                 }else{
-                    $DataPromocion = RegistroPromociones::where([["estado_del","1"],["idTipoPromocion",$Promociones['id']]])->get();
-                    if(count($DataPromocion) == 0){
+                    // $DataPromocion = RegistroPromociones::where([["estado_del","1"],["idTipoPromocion",$Promociones['id']]])->get();
+                    // if(count($DataPromocion) == 0){
                         $items = new RegistroPromociones();
                         $items->idTipoPromocion =$Promociones['id'];
+                        $items->descripcion =$request->descripcion;           
                         $items->descuento = $request->descuento;
                         $items->cantidad = $request->cantidad ;  
                         $items->fecha_inicio = $request->fecha_inicio;
                         $items->fecha_fin = $request->fecha_fin;    
                         $items->estado_del = "1";
-                        $items->publicado="1";
+                        //$items->publicado=$request->publicado;
                         $items->save();       
                         $code = '200';
                         $message = 'OK';
-                    }else{
-                        $code='403';
-                        $items = 'null';
-                        $message = 'Ya existe una promocion activa en este momento';
-                    }
+                    // }else{
+                    //     $code='403';
+                    //     $items = 'null';
+                    //     $message = 'Ya existe una promocion activa en este momento';
+                    // }
                 }
             }
         }
@@ -155,16 +159,17 @@ class RegistroPromocionesController extends Controller
                 $message ='';
                 $items ='';
                
-                $registro=RegistroPromociones::withCount(['kits'])->where("id",$request->id)->first();
-               
-                if($registro->kits_count==0){
-                    
+                $registro=RegistroPromociones::with(['kits2'])->where('id',$request->id)->first();
+            
+                    foreach ($registro->kits2 as $item) {
+                       
+                        $item->delete();
+
+                    }
                     $registro->delete();
-    
-                   
                     $code = '200';
                 $message = 'OK';    
-                }
+                
                       
          
 
@@ -206,31 +211,77 @@ class RegistroPromocionesController extends Controller
         $code='';
         $message ='';
         $items ='';
-        $item1= [];
-        $palabra = $request->term;
         $code = '200';        
-        if(trim($palabra) == ''){
-            $items =RegistroPromociones::where([["estado_del","1"]])->get();
+        if(trim($request->term) == ''){
+            $items =RegistroPromociones::where([["estado_del","1"],["publicado",null],['idTipoPromocion',$request->idTipoPromocion]])->limit(10)->get(['id', 'descripcion as text']);
         }else{
-            $items = RegistroPromociones::with('tipoPromocion1')->whereHas('tipoPromocion1', function ($query) use ($palabra) {
-                $query->where("descripcion","like",'%'.$palabra.'%');
-            })->get();
-        }
-        if(COUNT($items) > 0){
-            foreach ($items as $item) {
-                $item1[] = ['id' => $item->id, 'text' => $item->tipoPromocion1->descripcion];
-            }
+            $items = RegistroPromociones::where([["estado_del","1"],["publicado",null],['idTipoPromocion',$request->idTipoPromocion],["descripcion","like",'%'.$request->term.'%']])->limit(10)->get(['id', 'descripcion as text']);
+            //$items = RegistroPromociones::with('tipoPromocion1')->whereHas('tipoPromocion1', function ($query) use ($palabra) {
+              //  $query->where("descripcion","like",'%'.$palabra.'%');
+            //})->get();
         }
         $message = 'OK';
         $result =   array(
-                        'items'     => $item1,
+                        'items'     => $items,
                         'code'      => $code,
                         'message'   => $message
                     );
             
         return response()->json($result);
     }
+    public function publicidad(Request $request){
+        $message = '';
+        $item = '';
+        $code = '';
+        $registro=RegistroPromociones::with(['kits2'])->where('id',$request->id)->first();
+        foreach ($registro->kits2 as $items) {
+            if(($items->cantidad * $registro->cantidad)>$items->ProductoKit2->stock){
+                $item = $item.strval($items->ProductoKit2->NAME." solo dispone de la cantidad de ".(string)$items->ProductoKit2->stock)."\n";
+            }
+        }
+        if($message != ''){
+            $message = 'ERROR';
+            $code = '400';
+            $item = "Los siguientes productos no estan disponibles en stock : \n".$item;
+        }else{
+            $message = 'OK';
+            $code = '200';
+            foreach ($registro->kits2 as $items) {
+                $items->ProductoKit2->stock = (int)$items->ProductoKit2->stock - ((int)$items->cantidad * (int)$registro->cantidad);
+                $items->ProductoKit2->update();
+            }
+            $registro->publicado = "1";
+            $registro->update();
+        }
+        $result =   array(
+            'items'     => $item,
+            'code'      => $code,
+            'message'   => $message
+        );
+        return response()->json($result);
+    }
+    //esta funcion nos permite motrar todos los registro que tenga publicado 1
+    public function filtroRegistro(Request $request)
+    {
+        
+        $code='';
+        $message ='';
+        $items ='';
 
+             
+                $code = '200';
+                 $items =RegistroPromociones::where("id",$request->id)->first();
+                $message = 'OK';
+
+
+        $result =   array(
+                        'items'     => $items,
+                        'code'      => $code,    
+                        'message'   => $message
+                    );
+        return response()->json($result);
+    }
+    
     
     
 }

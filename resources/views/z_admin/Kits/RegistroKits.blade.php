@@ -19,16 +19,27 @@
                           </div>
                           <div class="col-md-6">
                           <br>
+                          <label>promocion </label>
+                            <br>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-building "></i></div>
+                                <select name = "selectPromocion" id ="selectPromocion" class ="form-control " > </select> 
+                                  
+                            </div>
+                           
+                      
+                        </div>
+                          
+                          <div class="col-md-6">
+                          <br>
+                           
+                            <br>
                             <label>Datos de la producto </label>
+                            
                             <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
                             <select name = "cmbTipo_Producto" id = "cmbTipo_Producto" class ="form-control pull-right " > </select> 
                             </div>
-                      
-                        </div>
-                          
-                          <div class="col-md-12">
-                          <br>
                             <br>
                             <label>Cantidad</label>
                             <div class="input-group">
@@ -76,4 +87,4 @@
           </div>
          
       </div>
-      <script src="{{ asset('js/GestionKits.js')}}" defer></script>
+     

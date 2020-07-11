@@ -16,7 +16,7 @@ $("#cmbTipo_Promocion3").select2({
     }
   },
   ajax: {
-    url: servidor+'/api/v0/RegistroPromociones_buscar',
+    url: servidor+'/api/v0/tipo_promociones_Buscar/'+ $('#nome_token_user').val(),
     data: function(params) {
       return {
           term: params.term
@@ -30,10 +30,44 @@ $("#cmbTipo_Promocion3").select2({
     }
   }
 }).on("change", function (e) {
-  cargar_tablakit($(this).val());
-
-  
+  $("#selectPromocion").empty().trigger('change')
+  comoboRegistro($(this).val());
 });
+function comoboRegistro(idTipopromocion){
+  $("#selectPromocion").select2({
+    placeholder: "Seleccióne el tipo de promociónes",
+    allowClear: true,
+    language: {
+  
+      noResults: function() {
+  
+        return "No hay resultado";        
+      },
+      searching: function() {
+  
+        return "Buscando..";
+      }
+    },
+    ajax: {
+      url: servidor+'/api/v0/RegistroPromociones_buscar',
+      data: function(params) {
+        return {
+            term: params.term,
+            idTipoPromocion : idTipopromocion
+        }
+      },
+      processResults: function (data) {
+        // Transforms the top-level key of the response object from 'items' to 'results'
+        return {
+          results: data.items
+        };
+      }
+    }
+  }).on("change", function (e) {
+    //aqui tiene que ir el codigo donde se limpia la tabla una ves que se elimine la tabla si ejecuta la funcion que esta aqui abajo
+    cargar_tablakit($(this).val());
+  });
+}
 $("#cmbTipo_Producto").select2({
   placeholder: "Seleccióne el tipo de promociónes",
   allowClear: true,
@@ -74,7 +108,7 @@ function ingresarKit(){
  }).then((willDelete) =>{
   if (willDelete) {
     var FrmData = {
-      idRegistro : $('#cmbTipo_Promocion3').val(),
+      idRegistro : $('#selectPromocion').val(),
       idProducto: $('#cmbTipo_Producto').val(),
       cantidad : $('#cantidad_id').val(),
     }
@@ -128,7 +162,6 @@ function cargar_tablakit(id) {
       data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
       success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
       {
-  
         llenar_tabla_kit(data);
       },
       error: function () {
@@ -150,7 +183,6 @@ $('#tablakit').DataTable({
   order: [],
   data: data.items,
     'createdRow': function (row, data, dataIndex) {
-      //console.log(data);
     },
     'columnDefs': [
         {
@@ -166,7 +198,7 @@ $('#tablakit').DataTable({
         {
             title: 'Proucto',
             width:ancho,
-            data: 'producto_kit[0].NAME'
+            data: 'producto_kit2.NAME'
         },
         {
             title: 'Cantidad',
@@ -185,7 +217,7 @@ $('#tablakit').DataTable({
           render: function (data, type, row) {
             var html='';
            
-                 html = `<button type="button" class="btn btn-sm btn-danger eliminarKit" value="${data.id}"><i class="fa fa-trash" aria-hidden="true"></i></button>`;
+                 html = `<button type="button" class="btn btn-sm btn-danger eliminarKit"  value="${data.id}"><i class="fa fa-trash" aria-hidden="true"></i></button>`;
                  html += `<button type="button" class="btn btn-sm btn-warning modificarKit" value="${data.id}" id="${data.id}Edit"><i class="fa fa-edit" aria-hidden="true"></i></button>`;
                  html += `<button style=" display:none " type="button" class="btn btn-sm btn-warning update" value="${data.id}" id="${data.id}Save"><i class="fa fa-save" aria-hidden="true"></i></button>`;
                  html += `<button style="display:none" type="button" class="btn btn-sm btn-success Close" id="${data.id}Close"><i class="fa fa-times" aria-hidden="true"></i></button>`;

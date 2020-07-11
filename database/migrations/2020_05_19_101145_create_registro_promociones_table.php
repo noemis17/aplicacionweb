@@ -15,7 +15,8 @@ class CreateRegistroPromocionesTable extends Migration
     {
         Schema::create('registro_promociones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('idTipoPromocion');
+            $table->unsignedBigInteger('idTipoPromocion');
+            $table->string('descripcion');
             $table->integer('descuento')->nullable();
             $table->Integer('cantidad');
             $table->date('fecha_inicio');
@@ -23,6 +24,7 @@ class CreateRegistroPromocionesTable extends Migration
             $table->string('estado_del','1')->default('1');
             $table->Integer('publicado')->nullable();
             $table->timestamps();
+            $table->foreign('idTipoPromocion')->references('id')->on('tipo_promocions');
             
         });
     }

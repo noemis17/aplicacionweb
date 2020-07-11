@@ -15,11 +15,15 @@ class CreateKitsTable extends Migration
     {
         Schema::create('kits', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('idRegistro');
-            $table->bigInteger('idProducto');  
+           
+            $table->unsignedBigInteger('idRegistro');
+            $table->unsignedBigInteger('idProducto'); 
             $table->Integer('cantidad');
             $table->string('estado_del')->default("1");
             $table->timestamps();
+           //$table->foreign('idRegistro')->references('id')->on('registro_promociones');
+           $table->foreign('idProducto')->references('id')->on('productos');
+          
         });
     }
 
