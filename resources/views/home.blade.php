@@ -52,7 +52,7 @@
             <a style="cursor:pointer;" id="btnVerFrmTipoUsuarios"  class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Roles de Usuario <span id="spanCount" class="badge">34</span></a>
             <a style="cursor:pointer;" id="btnVerFrmUsuarios" class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuarios <span class="badge">112</span></a>
             <a style="cursor:pointer;" id="btnVerFrmProductos"  class="list-group-item"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> Productos <span class="badge">39</span></a>
-            <a style="cursor:pointer;" id="" class="list-group-item"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Pedidos <span class="badge">112</span></a>
+            <a style="cursor:pointer;" id="btnVerFrmPedidos" class="list-group-item"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Pedidos <span class="badge">112</span></a>
             <a style="cursor:pointer;" id=""  class="list-group-item"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Ventas <span class="badge">39</span></a>
             <a style="cursor:pointer;" id="btnVerFrmPromocion" class="list-group-item"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Promociones <span class="badge">112</span></a>
             <a style="cursor:pointer;" id="btnVerFrmkits" class="list-group-item"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Kits<span class="badge">112</span></a>
@@ -104,7 +104,7 @@
                     @include('z_admin.TipoUsuarios.frm')
                     @include('z_admin.Usuarios.frm')
                     @include('z_admin.Productos.frm')
-                 
+                    @include('z_admin.Pedidos.frm')
                     @include('z_admin.Promociones.tablaPromociones')    
                     @include('z_admin.Promociones.registroPromocion')
                     @include('z_admin.TipoPromocion.registroTipo')

@@ -110,6 +110,20 @@ class DatabaseSeeder extends Seeder
             'identificador' => '2',
             'descricion' => 'EFECTIVO',
         ]);
+     
+        DB::table('Ordens')->insert([
+            'idUsuario' => '3',
+            'idestado' => '1',
+            'idcourier' => '2',
+            'idTipoPago' => '1',
+            'Orden' => 'super-orden-000000000000001',
+            'fechaOrden' => '2020-05-09',
+            'total' => '2',
+            'finalizado' => '0',
+            'latitud' => '-0.843633',
+            'longitud' => '-80.16894599999999',
+          
+        ]);
         // DB::table('productos')->insert([
         //     'id_foraneo'          => '4',
         //     'cod_barra'           => '7730698316062',
