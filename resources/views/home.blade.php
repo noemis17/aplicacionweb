@@ -110,7 +110,7 @@
                     @include('z_admin.TipoPromocion.registroTipo')
                     @include('z_admin.PromocioneDelProducto.registro')
                    
-                    @include('z_admin.kits.RegistroKits')
+                    @include('z_admin.Kits.RegistroKits')
                    
                 
                     

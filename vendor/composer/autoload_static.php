@@ -532,6 +532,8 @@ class ComposerStaticInitf91eba4122b6bda60a56264dddace4a0
 
     public static $classMap = array (
         'App\\Compra' => __DIR__ . '/../..' . '/app/Compra.php',
+        'App\\Comprobante' => __DIR__ . '/../..' . '/app/Comprobante.php',
+        'App\\Comprovante' => __DIR__ . '/../..' . '/app/Comprovante.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\DetalleVenta' => __DIR__ . '/../..' . '/app/DetalleVenta.php',
         'App\\EstadoVenta' => __DIR__ . '/../..' . '/app/EstadoVenta.php',
@@ -542,6 +544,7 @@ class ComposerStaticInitf91eba4122b6bda60a56264dddace4a0
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\CompraController' => __DIR__ . '/../..' . '/app/Http/Controllers/CompraController.php',
+        'App\\Http\\Controllers\\ComprovanteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ComprovanteController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DetalleVentaController' => __DIR__ . '/../..' . '/app/Http/Controllers/DetalleVentaController.php',
         'App\\Http\\Controllers\\EstadoVentaController' => __DIR__ . '/../..' . '/app/Http/Controllers/EstadoVentaController.php',
@@ -551,6 +554,7 @@ class ComposerStaticInitf91eba4122b6bda60a56264dddace4a0
         'App\\Http\\Controllers\\ProductoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductoController.php',
         'App\\Http\\Controllers\\PromocionDelProductoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PromocionDelProductoController.php',
         'App\\Http\\Controllers\\RegistroPromocionesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RegistroPromocionesController.php',
+        'App\\Http\\Controllers\\TipoPagoController' => __DIR__ . '/../..' . '/app/Http/Controllers/TipoPagoController.php',
         'App\\Http\\Controllers\\TipoPromocionController' => __DIR__ . '/../..' . '/app/Http/Controllers/TipoPromocionController.php',
         'App\\Http\\Controllers\\TipoUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/TipoUsuarioController.php',
         'App\\Http\\Controllers\\UbicacionController' => __DIR__ . '/../..' . '/app/Http/Controllers/UbicacionController.php',

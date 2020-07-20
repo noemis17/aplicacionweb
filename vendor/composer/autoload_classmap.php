@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Compra' => $baseDir . '/app/Compra.php',
+    'App\\Comprobante' => $baseDir . '/app/Comprobante.php',
+    'App\\Comprovante' => $baseDir . '/app/Comprovante.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\DetalleVenta' => $baseDir . '/app/DetalleVenta.php',
     'App\\EstadoVenta' => $baseDir . '/app/EstadoVenta.php',
@@ -17,6 +19,7 @@ return array(
     'App\\Http\\Controllers\\Auth\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ResetPasswordController.php',
     'App\\Http\\Controllers\\Auth\\VerificationController' => $baseDir . '/app/Http/Controllers/Auth/VerificationController.php',
     'App\\Http\\Controllers\\CompraController' => $baseDir . '/app/Http/Controllers/CompraController.php',
+    'App\\Http\\Controllers\\ComprovanteController' => $baseDir . '/app/Http/Controllers/ComprovanteController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DetalleVentaController' => $baseDir . '/app/Http/Controllers/DetalleVentaController.php',
     'App\\Http\\Controllers\\EstadoVentaController' => $baseDir . '/app/Http/Controllers/EstadoVentaController.php',
@@ -26,6 +29,7 @@ return array(
     'App\\Http\\Controllers\\ProductoController' => $baseDir . '/app/Http/Controllers/ProductoController.php',
     'App\\Http\\Controllers\\PromocionDelProductoController' => $baseDir . '/app/Http/Controllers/PromocionDelProductoController.php',
     'App\\Http\\Controllers\\RegistroPromocionesController' => $baseDir . '/app/Http/Controllers/RegistroPromocionesController.php',
+    'App\\Http\\Controllers\\TipoPagoController' => $baseDir . '/app/Http/Controllers/TipoPagoController.php',
     'App\\Http\\Controllers\\TipoPromocionController' => $baseDir . '/app/Http/Controllers/TipoPromocionController.php',
     'App\\Http\\Controllers\\TipoUsuarioController' => $baseDir . '/app/Http/Controllers/TipoUsuarioController.php',
     'App\\Http\\Controllers\\UbicacionController' => $baseDir . '/app/Http/Controllers/UbicacionController.php',

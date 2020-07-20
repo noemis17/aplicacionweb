@@ -25,5 +25,9 @@ class Orden extends Model
         return $this->hasOne('App\User','id', 'idUsuario');
         //return $this->hasMany('App\Compra','idOrdenar', 'id')->with(['Promocion']);
     }
+    public function Comprobante(){
+        return $this->hasMany('App\Comprobante','idorden', 'id');
+        //return $this->hasMany('App\Compra','idOrdenar', 'id')->with(['Promocion']);
+    }
 
 }

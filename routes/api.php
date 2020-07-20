@@ -135,3 +135,6 @@ Route::get('/v0/pdf', function () {
    return $pdf->stream();
 //    return $pdf->download();
 });
+
+Route::post('/v0/guardarDocumentoTransaccion/{data?}','ComprobanteController@guardarDocumentoTransaccion');
+
