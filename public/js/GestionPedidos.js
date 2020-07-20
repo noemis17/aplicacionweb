@@ -21,12 +21,13 @@ function cargar_tablaPedidos(value='') {
   });
 
   $.ajax({
-    url: servidor+'/api/v0/ventas_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+    url: servidor+'/api/v0/SoloPedidos'+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
     method: "GET",             // Tipo de solicitud que se enviará, llamado como método
     data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
     {
-      //console.log(data);
+
+      // console.log(data);
       GP_crearTablaPedidos_2(data.items);
     },
     error: function () {
@@ -34,6 +35,7 @@ function cargar_tablaPedidos(value='') {
         swal(mensaje);
     }
   });
+  
 }
 
 // function crear_tablaPedidos(data) {
@@ -140,12 +142,12 @@ function GP_crearTablaPedidos_2(data) {
           {
               title: 'FECHA',
               width:ancho,
-              data: 'fecha'
+              data: 'fechaOrden'
           },
           {
               title: 'CLIENTE',
               width:ancho,
-              data: 'cliente.name'
+              data: 'usuarios.name'
           },
           {
               title: 'TRANSPORTE',
@@ -154,7 +156,7 @@ function GP_crearTablaPedidos_2(data) {
               render: function ( data, type, row ) {
 
                 var html = `
-                  <button type="button" class="btn btn-sm btn-outline-success" onclick="pedidos_verCouriers('${data.nome_token}')">Asignar </button>
+                  <button type="button" class="btn btn-sm btn-outline-success" onclick="pedidos_verCouriers('${data.id}')">Asignar </button>
                 `;
 
                 return `${html}`;
@@ -201,7 +203,7 @@ function pedidos_ver(nome_token) {
     data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
     {
-      console.log(data);
+      // console.log(data);
       crear_pedido_modal(data.items);
       $(".frmPedidos_modal").modal('show');
     },
@@ -298,9 +300,10 @@ function crear_pedido_modal(data) {
 //Cargar todos los Couriers
 //****************************************************************************************************************************************************************************
 
-function pedidos_verCouriers(nome_token) {
-	//swal('oh');
-	$("#pedido_nome_token").val(nome_token);
+function pedidos_verCouriers(idOrden) {
+  //swal('oh');
+  
+	$("#pedido_nome_token").val(idOrden);
   cargar_tablaCouriers('');
 	$(".frmCourier_modal").modal("show");
 }
@@ -350,7 +353,7 @@ function crear_tablaCouriers(data) {
             <td><input type="hidden" value="${item.cedula}">${item.cedula}</td>
             <td><input type="hidden" value="${item.celular}">${item.celular}</td>
             <td>
-              <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" onclick="pedidos_asignarCourier('${item.nome_token}')">Asignar</button>
+              <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" onclick="pedidos_asignarCourier('${item.id}')">Asignar</button>
             </td>
         </tr>
       `;
@@ -372,7 +375,7 @@ function crear_tablaCouriers_v2(data) {
         order: [],
         data: data,
         'createdRow': function (row, data, dataIndex) {
-            // console.log(data);
+            //  console.log(data);
         },
         'columnDefs': [
             {
@@ -414,7 +417,7 @@ function crear_tablaCouriers_v2(data) {
                 render: function (data, type, row) {
 
                   var html = `
-                    <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" onclick="pedidos_asignarCourier('${data.nome_token}')">Asignar</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" onclick="pedidos_asignarCourier('${data.id}')">Asignar</button>
                   `;
 
                   return `${html}`;
@@ -428,14 +431,14 @@ function crear_tablaCouriers_v2(data) {
     //});
 }
 
-function pedidos_asignarCourier(nome_token) {
+function pedidos_asignarCourier(idCourier) {
   //swal(nome_token);
-	$("#fk_courier_nome_token").val(nome_token);
+	$("#fk_courier_nome_token").val(idCourier);
 
 	var FrmData=
   {
-    nome_token_venta: $("#pedido_nome_token").val(),
-		nome_token_courier: nome_token,
+    idOrden: $("#pedido_nome_token").val(),
+		nome_token_courier: idCourier,
   }
   $.ajaxSetup({
         headers: {
@@ -456,13 +459,13 @@ function pedidos_asignarCourier(nome_token) {
 		if (willDelete) {
 
 			$.ajax({
-		    url: servidor+'/api/v0/ventas_asignar_courier/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+		    url: servidor+'/api/v0/AsignarCourier/'+ FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
 		    method: "PUT",             // Tipo de solicitud que se enviará, llamado como método
 		    data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
 		    success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
 		    {
 					//swal(data);
-          //console.log(data);
+          // console.log(data);
 
 
 		    	cargar_tablaPedidos('');

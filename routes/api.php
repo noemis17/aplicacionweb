@@ -125,10 +125,11 @@ Route::get('/v0/ProductosPorid/{data?}','PromocionDelProductoController@Producto
 //compra
 Route::post('/v0/ComprarProducto/{data?}','CompraController@ComprarProducto')->name('api.v0.compras.ComprarProducto');
 Route::post('/v0/OrdenesCompradas/{data?}','OrdenController@ConsultarComprasHechas')->name('api.v0.compras.OrdenesPorUsuario'); 
+Route::get('/v0/SoloPedidos/{data?}','OrdenController@SoloPedidos');
+Route::put('/v0/AsignarCourier/{data?}','OrdenController@AsignarCourier');
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('/v0/Filtro/{data?}','TipoPagoController@Filtro')->name('api.v0.tipoPago.Filtro');
 //DPF
-
 Route::get('/v0/pdf', function () {
     $pdf = PDF::loadView('z_reportes.a_cuerpo');
   // $pdf = PDF::loadHtml("pdf");

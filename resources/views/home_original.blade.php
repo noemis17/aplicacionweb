@@ -12,11 +12,11 @@
                 @include('z_admin.TipoUsuarios.frm')
                 @include('z_admin.Usuarios.frm')
                 @include('z_admin.Productos.frm')
-               
+                @include('z_admin.Pedidos.frm')
                 @include('z_admin.Promociones.Frm')
                 @include('z_admin.Promociones.registroPromocion')
                 @include('z_admin.PromocioneDelProducto.registro')
-                @include('z_admin.Pedidos.frm')
+                
                 @include('z_admin.Ventas.frm')
                 @include('z_admin.Reportes.frm')
                 @include('z_admin.TipoPromocion.registroTipo')

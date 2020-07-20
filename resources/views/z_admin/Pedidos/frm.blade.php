@@ -1,8 +1,9 @@
-<div id="cardPedidos" class="card">
-    <div class="card-header barra">Pedidos</div>
-
-    <div class="card-body">
-
+<div class="card" id="cardPedidos">
+	<div class="panel panel-default">
+		<div class="panel-heading main-color-bg">
+		  <h3 class="panel-title">Pedidos</h3>
+		</div>
+		<div class="panel-body">
 <!-- 		<form class="needs-validation">
 
 		  <div class="form-group row">
@@ -27,7 +28,7 @@
 
 		</form> -->
 
-    </div>
+		
 
 	<div class="card-footer">
 		@include('z_admin.Pedidos.tabla')
@@ -35,5 +36,6 @@
 		@include('z_admin.Pedidos.zfk_modal_courier')
 		{{-- @include('z_admin.Pedidos.zfk_tabla_courier') --}}
 	</div>
-
+	</div>
+</div>
 </div>
