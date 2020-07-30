@@ -116,8 +116,6 @@ class OrdenController extends Controller
     }
 
 
-<<<<<<< HEAD
-=======
     public function SoloPedidos(Request $request)
     {
         
@@ -167,6 +165,5 @@ class OrdenController extends Controller
         
         return response()->json($result);
     }
->>>>>>> c92d93ec0584281b41ecad817dea80a2708ea2d9
 
 }

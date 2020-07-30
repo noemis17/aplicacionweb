@@ -163,10 +163,17 @@ class UserController extends Controller
     // update
     public function update($nome_token_user='',Request $request)
     {
-        //return response()->json('hol');
+        // return response()->json('hol');
         $code='';
         $message ='';
         $items ='';
+        // $result =   array(
+        //     'items'     => [$request->nome_token ,$nome_token_user],
+        //     'code'      => '200',
+        //     'message'   => $message
+        // );
+
+        // return response()->json($result);
 
         if (empty($nome_token_user)) {
 
@@ -179,13 +186,20 @@ class UserController extends Controller
             $validad = User::where('nome_token',$nome_token_user)->first();
 
             if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
-                //no existe ese usuarios o fue dado de baja.
+                $code='403';
+                $items = 'null';
+                $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
+
             } else {
 
                 $code = '200';
 
                 $items = User::where("nome_token",$request->nome_token)->first();
-                $items->idtipo = (TipoUsuario::where('nome_token',$request->nome_token_tipo)->first())->id;
+                try {
+                    $items->idtipo = (TipoUsuario::where('nome_token',$request->nome_token_tipo)->first())->id;
+                } catch (\Throwable $th) {
+                    
+                }
                 $items->name = $request->name;
                 $items->email = $request->email;
                 $items->cedula = $request->cedula;
