@@ -17,14 +17,15 @@ function cargar_tablaVentas(value='') {
   });
 
   $.ajax({
-    url: '/api/v0/ventas_filtro/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+    url: '/api/v0/todasLasVentas',// Url que se envia para la solicitud esta en el web php es la ruta
     method: "GET",             // Tipo de solicitud que se enviará, llamado como método
     data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
     {
 
         // crear_tablaVentas(data);
-        crear_tablaVentas_v2(data.items);
+        console.log(data);
+        // crear_tablaVentas_v2(data.items);
     },
     error: function () {
         mensaje = "OCURRIO UN ERROR: Archivo->GestionVentas.js , funcion->cargar_tablaVentas()";
