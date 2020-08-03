@@ -166,4 +166,32 @@ class OrdenController extends Controller
         return response()->json($result);
     }
 
+    public function todasLasVentas(Request $request)
+    {
+        ///return response()->json($request); 
+        $code='500';
+        $message ='error';
+        $items =null;
+
+        try {
+            $estado=EstadoVenta::where("cod", "002")->first();
+            $items= Orden::with('Compras','TipoPago','Estado','Usuarios')->where("idestado", $estado->id)->get();
+
+            $code='200';
+            $message = 'ok';
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        
+
+        $result =   array(
+            'items'     => $items,
+            'code'      => $code,
+            'message'   => $message
+        );
+        return response()->json($result);
+    }
+
 }

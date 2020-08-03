@@ -111,7 +111,7 @@ class DatabaseSeeder extends Seeder
             'descricion' => 'EFECTIVO',
         ]);
      
-        DB::table('Ordens')->insert([
+        DB::table('ordens')->insert([
             'idUsuario' => '3',
             'idestado' => '1',
             'idcourier' => '2',

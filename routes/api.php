@@ -139,3 +139,4 @@ Route::get('/v0/pdf', function () {
 
 Route::post('/v0/guardarDocumentoTransaccion/{data?}','ComprobanteController@guardarDocumentoTransaccion');
 
+Route::get('/v0/todasLasVentas/{data?}','OrdenController@todasLasVentas');

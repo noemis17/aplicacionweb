@@ -53,7 +53,7 @@
             <a style="cursor:pointer;" id="btnVerFrmUsuarios" class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuarios <span class="badge">112</span></a>
             <a style="cursor:pointer;" id="btnVerFrmProductos"  class="list-group-item"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> Productos <span class="badge">39</span></a>
             <a style="cursor:pointer;" id="btnVerFrmPedidos" class="list-group-item"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Pedidos <span class="badge">112</span></a>
-            <a style="cursor:pointer;" id=""  class="list-group-item"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Ventas <span class="badge">39</span></a>
+            <a style="cursor:pointer;" id="btnVerFrmVentas"  class="list-group-item"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Ventas <span class="badge">39</span></a>
             <a style="cursor:pointer;" id="btnVerFrmPromocion" class="list-group-item"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Promociones <span class="badge">112</span></a>
             <a style="cursor:pointer;" id="btnVerFrmkits" class="list-group-item"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Kits<span class="badge">112</span></a>
             <a style="cursor:pointer;" id=""  class="list-group-item"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Ubicación <span class="badge">39</span></a>
@@ -242,6 +242,7 @@
     <script src="{{ asset('js/GestionReportes.js') }}" defer></script>
     <script src="{{ asset('js/GestionPromocion.js')}}" defer></script>
     <script src="{{ asset('js/GestionKits.js')}}" defer></script>
+    {{-- <script src="{{ asset('js/GestionOrden.js')}}" defer></script> --}}
   
     <script>
         function printDiv(nombreDiv) {
